@@ -1,6 +1,6 @@
 package com.example.scheduler.controller;
 
-import com.example.scheduler.model.User;
+import com.example.scheduler.model.UserEntity;
 import com.example.scheduler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,29 +16,29 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
-        if (user != null) {
-            return ResponseEntity.ok(user);
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
+        UserEntity userEntity = userService.getUserById(id);
+        if (userEntity != null) {
+            return ResponseEntity.ok(userEntity);
         }
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public UserEntity createUser(@RequestBody UserEntity userEntity) {
+        return userService.createUser(userEntity);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
-        User updatedUser = userService.updateUser(id, userDetails);
-        if (updatedUser != null) {
-            return ResponseEntity.ok(updatedUser);
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntityDetails) {
+        UserEntity updatedUserEntity = userService.updateUser(id, userEntityDetails);
+        if (updatedUserEntity != null) {
+            return ResponseEntity.ok(updatedUserEntity);
         }
         return ResponseEntity.notFound().build();
     }
