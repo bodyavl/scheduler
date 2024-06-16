@@ -14,10 +14,10 @@ public enum Role {
     USER;
 
 
-    public List<SimpleGrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
-        return authorities;
-    }
+//    public List<SimpleGrantedAuthority> getAuthorities() {
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//
+//        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+//        return authorities;
+//    }
 }

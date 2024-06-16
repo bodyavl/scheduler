@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -36,13 +35,14 @@ public class UserAuthenticationProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(UserDetails user) {
+    public String createToken(UserDto user) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3600000); // 1 hour
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         return JWT.create()
-                .withSubject(user.getUsername())
+                .withSubject(user.getEmail())
+                .withClaim("username", user.getUsername())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .sign(algorithm);
@@ -64,7 +64,7 @@ public class UserAuthenticationProvider {
                 .getBody();
     }
 
-    public Authentication validateToken(String token, UserDetails userDetails) {
+    public Authentication validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
         JWTVerifier verifier = JWT.require(algorithm)
@@ -74,7 +74,7 @@ public class UserAuthenticationProvider {
 
         UserDto user = UserDto.builder()
                 .email(decoded.getSubject())
-                .name(decoded.getClaim("name").asString())
+                .username(decoded.getClaim("username").asString())
                 .build();
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());

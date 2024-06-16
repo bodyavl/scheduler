@@ -2,7 +2,6 @@ package com.example.scheduler.controller;
 
 import com.example.scheduler.model.Event;
 import com.example.scheduler.service.EventService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@SecurityRequirement(name = "Bearer Authentication")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
@@ -19,7 +18,6 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
@@ -35,7 +33,6 @@ public class EventController {
         return ResponseEntity.notFound().build();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Event createEvent(@RequestBody Event event) {
         return eventService.createEvent(event);
