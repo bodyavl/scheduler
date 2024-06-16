@@ -4,6 +4,7 @@ import com.example.scheduler.model.Event;
 import com.example.scheduler.service.EventService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,18 @@ public class EventController {
             return ResponseEntity.ok(updatedEvent);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{eventId}/users/{userId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void addUserToEvent(@PathVariable Long eventId, @PathVariable Long userId) {
+        eventService.addUserToEvent(eventId, userId);
+    }
+
+    @DeleteMapping("/{eventId}/users/{userId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void removeUserFromEvent(@PathVariable Long eventId, @PathVariable Long userId) {
+        eventService.removeUserFromEvent(eventId, userId);
     }
 
     @DeleteMapping("/{id}")

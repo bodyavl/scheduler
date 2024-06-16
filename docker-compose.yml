@@ -10,6 +10,15 @@ services:
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: scheduler
 
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:secret@postgres:5432/scheduler
+
 
 volumes:
   scheduler-db:

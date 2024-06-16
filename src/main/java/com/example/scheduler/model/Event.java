@@ -1,9 +1,16 @@
 package com.example.scheduler.model;
 
 import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 @Entity
 public class Event {
     @Id
@@ -14,6 +21,16 @@ public class Event {
 
     private String description;
 
+    private Date startTime;
+
+    private Date endTime;
+
+    private String location;
+
+    private Long duration;
+
+    @Builder.Default
+    @Getter
     @ManyToMany
     @JoinTable(
             name = "event_app_user",
