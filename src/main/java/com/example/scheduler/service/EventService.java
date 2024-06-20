@@ -1,5 +1,6 @@
 package com.example.scheduler.service;
 
+import com.example.scheduler.dtos.EventDto;
 import com.example.scheduler.model.Event;
 import com.example.scheduler.model.UserEntity;
 import com.example.scheduler.repository.EventRepository;

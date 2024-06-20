@@ -1,5 +1,7 @@
 package com.example.scheduler.controller;
 
+import com.example.scheduler.dtos.EventDto;
+import com.example.scheduler.mappers.EventMapper;
 import com.example.scheduler.model.Event;
 import com.example.scheduler.service.EventService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,6 +21,9 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private EventMapper eventMapper;
+
     @GetMapping
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
@@ -35,7 +40,8 @@ public class EventController {
     }
 
     @PostMapping
-    public Event createEvent(@RequestBody Event event) {
+    public Event createEvent(@RequestBody EventDto dto) {
+        Event event = eventMapper.dtoToEvent(dto);
         return eventService.createEvent(event);
     }
 
